@@ -32,7 +32,7 @@ class PasteServiceMongoDBTest {
     @Value("${mongodb.collection.pastes}")
     private String collectionName;
 
-    @Value("${mongodb.limit-of-last-pastes}")
+    @Value("${pastes.last-pastes.limit}")
     private int limitOfLastPastes;
 
     private List<Paste> pastes;
