@@ -1,0 +1,33 @@
+
+version: "3.8"
+
+services:
+
+  #  MongoDB
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27018:27017"
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: admin
+#      MONGO_INITDB_ROOT_PASSWORD: admin
+
+  #  App
+  pastebin-mine-rest-mongo:
+    depends_on:
+      - mongo
+    image: pastebin-mine-rest-mongo-image
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "pastes.last-pastes.limit" : "10",
+        "pastes.remover.enabled" : "true",
+        "pastes.remover.scheduled.fixed-rate.millis" : "5000",
+        
+        "mongodb.host" : "mongodb://mongo:27017",
+        "mongodb.database" : "pastebin-mine-rest-mongo",
+        "mongodb.collection.pastes" : "pastes"
+      }'
+
